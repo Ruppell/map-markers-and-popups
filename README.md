@@ -3,7 +3,7 @@
 ## Requirements
 
 - Marker and popup data should be stored in a json object.
-- It should be possible to set the default active marker, the default marker's popup will be shown by default (if data exists).
+- It should be possible to set the default active marker. The related popup will be shown (if data exists).
 - Only some of the markers will have popup data, so do account for this.
 - On desktop marker popups should be shown on hover.
 - On mobile and tablet the marker popups should be shown on touch/press.
