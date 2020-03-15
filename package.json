@@ -1,0 +1,14 @@
+{
+  "name": "map-markers-and-popups",
+  "version": "1.0.0",
+  "description": "https://developers.google.com/maps/documentation/javascript/examples/overlay-popup https://mapstyle.withgoogle.com",
+  "main": "index.js",
+  "scripts": {
+    "watch": "browser-sync -w ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}

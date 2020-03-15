@@ -1,0 +1,18 @@
+root = true
+
+# unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# matches multiple files with brace expansion notation
+# set default charset
+[*.{js,html}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+
+# matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
