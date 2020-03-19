@@ -298,9 +298,9 @@ function initMap() {
 		};
 
 		// Set default info window by array index
-		var defaultWindowIndex = 3
+		var defaultWindowIndex = 3;
 		// Check if default index is set
-		if(defaultWindowIndex){
+		if(defaultWindowIndex && defaultWindowIndex <= locationsJSON.length){
 			var windowContent = popupHTML(locationsJSON[defaultWindowIndex].details.heading, 
 				locationsJSON[defaultWindowIndex].details.description, 
 				locationsJSON[defaultWindowIndex].details.thumbnail, 
