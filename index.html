@@ -26,7 +26,7 @@
 <body>
 
     <!-- map holder -->
-    <div class="map-holder">
+    <div class="map-holder" id="map">
         <!-- render map here. -->
     </div>
 
@@ -35,6 +35,11 @@
             console.log('Hello World!');
         });
     </script>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4AzXAfgPzkpBatNpz3GSNFwHc6rbR-KQ&callback=initMap">
+    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
