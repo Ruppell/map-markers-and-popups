@@ -1,61 +1,61 @@
 /*
 	So it begins
+
 */
 var markerUrl = "http://dev.keoshi.com/a8c/gmaps/marker-01.png";
 
-var locationsJSON = [
-											{"marker": {"lat": 47.6062095, "lng": -122.3320708},
-											"details":{ "heading": "Heading 1",
-																	 "description": "This is desc text",
-														 			 "thumbnail": "",
-																	 "link": "",
-																}
-											},
-											{"marker": {"lat": 37.3382082, "lng": -121.8863286},
-												"details":{ "heading": "Lorem ipsum",
-																		 "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
-														 			 	 "thumbnail": "sdfdsfs",
-																		 "link": "",
-																	}
-											},
-											{"marker": {"lat": 22.396428, "lng": 114.109497},
-												"details":{ "heading": "Lorem ipsum",
-																		 "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
-														 			 	 "thumbnail": "sdfdsfs",
-																		 "link": "",
-																	}
-											},
-											{"marker": {"lat": 51.5073509, "lng": -0.12775829},
-												"details":{ "heading": "Lorem ipsum",
-																		 "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
-														 			 	 "thumbnail": "sdfdsfs",
-																		 "link": "",
-																	}
-											},
-											{"marker": {"lat": -33.8674869, "lng": 151.2069902},
-												"details":{ "heading": "Lorem ipsum",
-																		 "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
-														 			 	 "thumbnail": "sdfdsfs",
-																		 "link": "",
-																	}
-											}
-										];
+var locationsJSON = 
+		[
+			{"marker": {"lat": 47.6062095, "lng": -122.3320708},
+			"details":{ "heading": "",
+									"description": "This is desc text",
+									"thumbnail": "",
+									"link": "",
+								}
+			},
+			{"marker": {"lat": 37.3382082, "lng": -121.8863286},
+				"details":{ "heading": "Lorem ipsum",
+										"description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
+										"thumbnail": "https://via.placeholder.com/300",
+										"link": "",
+									}
+			},
+			{"marker": {"lat": 22.396428, "lng": 114.109497},
+				"details":{ "heading": "Lorem",
+										"description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
+										"thumbnail": "https://via.placeholder.com/300",
+										"link": "",
+									}
+			},
+			{"marker": {"lat": 51.5073509, "lng": -0.12775829},
+				"details":{ "heading": "Heading Text",
+										"description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
+										"thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQVPglTAHMlAj74PofPXVSzJnJW90niA4H-qK0UT2Y_i1zdgdxy",
+										"link": "",
+									}
+			},
+			{"marker": {"lat": -33.8674869, "lng": 151.2069902},
+				"details":{ "heading": "Lorem ipsum",
+										"description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet mauris nibh",
+										"thumbnail": "sdfdsfs",
+										"link": "",
+									}
+			}
+		];
 
 function popupHTML(heading, description, thumbnail, link){
 	html = '\
-					<div class="pop_up_data">\
-						<h3>'+heading+'</h3>\
-						<div class="info-line"> \
-								<p>'+description+'</p>\
-						</div>\
-						<div class="info-line">\
-							<p>'+thumbnail+'</p>\
-						</div>\
-						<div class="info-cta">\
-							<p><a class="details_btn" href="'+link+'" target="_blank">DIRECTIONS</a></p>\
-						</div>\
-					</div>\
-					';
+			<h2>'+heading+'</h2>\
+			<div class="js-popup-data">\
+				<div class="js-popup-thumb">\
+					<img src="'+thumbnail+'">\
+				</div>\
+				<div class="js-popup-content"> \
+					<p>'+description+'</p>\
+					<p class="js-popup-link"><a href="'+link+'" target="_blank">Visit</a></p>\
+				</div>\
+			</div>\
+			';
 	return html;
 }
 
@@ -229,42 +229,88 @@ var mapStyles = [
 				}
 			];
 
+
+
 function initMap() {
 
+	var zoomLevel = 0
 	var marker, i;
-	var infowindow = new google.maps.InfoWindow();
+	var infoWindow = new google.maps.InfoWindow();
 	var markers = [];
+	var mapDiv =  document.getElementById( 'map' );
+	var windowWidth = document.documentElement.clientWidth;
 
-	var map = new google.maps.Map( document.getElementById( 'map' ), {
-		zoom: 2,
-		center: { lat: 23.492, lng: 12.355 },
-		styles:mapStyles
-	} );
+	// Setting zoom for diffrent screen sizes
+	if(windowWidth <= 500){
+		// Cellphones
+		zoomLevel = 0
+	}else if(windowWidth <= 780){
+		// Tablet Portrait
+		zoomLevel = 1.5
+	}else if(windowWidth <= 1025){
+		// Tablet Landscape
+		zoomLevel = 2
+	}else{
+		// Desktop and beyond
+		zoomLevel = 2
+	}
 
-	for ( i = 0; i < locationsJSON.length; i++ ) {
-		marker = new google.maps.Marker({
-			map: map,
-			flat: true,
-			icon: {
-				url: markerUrl,
-				scaledSize: new google.maps.Size(20, 30)
-			},
-			position: {lat: locationsJSON[i].marker.lat, lng: locationsJSON[i].marker.lng}
-		});
+	// Check if DOM element with ID exist
+	if(mapDiv){
+		var map = new google.maps.Map( mapDiv, {
+			zoom: zoomLevel,
+			disableDefaultUI: true,
+			zoomControl: true,
+			center: { lat: 23.492, lng: 12.355 },
+			styles:mapStyles
+		} );
 
+		// Loop to create markers and info window
+		for ( i = 0; i < locationsJSON.length; i++ ) {
+			marker = new google.maps.Marker({
+				map: map,
+				flat: true,
+				maxWidth: 350,
+				icon: {
+					url: markerUrl,
+					scaledSize: new google.maps.Size(20, 30)
+				},
+				position: {lat: locationsJSON[i].marker.lat, lng: locationsJSON[i].marker.lng}
+			});
 
+			google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+				return function() {
+					var windowContent = popupHTML(locationsJSON[i].details.heading, 
+												  locationsJSON[i].details.description, 
+												  locationsJSON[i].details.thumbnail, 
+												  locationsJSON[i].details.link 
+												  );
+					
+					// Dont send info window if no content exist.
+					// I'm only checking if the heading exist here
+					if(locationsJSON[i].details.heading !== ""){
+						infoWindow.setContent(windowContent);
+						infoWindow.open(map, marker);
+					}		
+				}
+			})(marker, i));
+			markers.push(marker);
+		};
 
-		google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-			return function() {
-				var windowContent = popupHTML(locationsJSON[i].details.heading, locationsJSON[i].details.description, locationsJSON[i].details.thumbnail, locationsJSON[i].details.link );
-				infowindow.setContent(windowContent);
-				infowindow.open(map, marker);
-			}
-		})(marker, i));
-		markers.push(marker);
+		// Set default info window by array index
+		var defaultWindowIndex = 3
+		// Check if default index is set
+		if(defaultWindowIndex){
+			var windowContent = popupHTML(locationsJSON[defaultWindowIndex].details.heading, 
+				locationsJSON[defaultWindowIndex].details.description, 
+				locationsJSON[defaultWindowIndex].details.thumbnail, 
+				locationsJSON[defaultWindowIndex].details.link 
+				);
+			infoWindow.setContent(windowContent);
+			infoWindow.open(map, markers[defaultWindowIndex]);
+		}
 
-	};
+	}
 
 };
 
-init();
