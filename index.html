@@ -20,13 +20,44 @@
         }
 
         /* all styles here */
+        .js-popup-data {
+            display: inline-flex;
+            flex-direction: row;
+            flex: initial;
+            max-width: 350px;
+            align-items: center;
+        }
+
+        .js-popup-thumb {
+            width: 45%;
+            padding-right: 10px;
+        }
+        .js-popup-thumb img {
+            width: 100%;
+        }
+
+        .js-popup-link {
+            text-align: right;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .js-popup-link a{
+            text-decoration: none;
+            color: #ffffff;
+            padding: 7px 30px;
+            background-color: #0ad6a4;
+            font-weight:500;
+            margin-top: 20px;
+        }
+
     </style>
 </head>
 
 <body>
 
     <!-- map holder -->
-    <div class="map-holder">
+    <div class="map-holder" id="map">
         <!-- render map here. -->
     </div>
 
@@ -35,6 +66,11 @@
             console.log('Hello World!');
         });
     </script>
+
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4AzXAfgPzkpBatNpz3GSNFwHc6rbR-KQ&callback=initMap">
+    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
