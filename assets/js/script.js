@@ -1,7 +1,6 @@
-/*
-    So it begins
-
-*/
+/**
+ * Google map with marker.
+ */
 var markerUrl = "http://dev.keoshi.com/a8c/gmaps/marker-01.png";
 
 var locationsJSON =
@@ -239,8 +238,6 @@ var mapStyles = [
     }
 ];
 
-
-
 function initMap() {
 
     var zoomLevel = 0
@@ -250,22 +247,22 @@ function initMap() {
     var mapDiv = document.getElementById('map');
     var windowWidth = document.documentElement.clientWidth;
 
-    // Setting zoom for diffrent screen sizes
+    // setting zoom for different screen sizes
     if (windowWidth <= 500) {
-        // Cellphones
+        // mobile
         zoomLevel = 0
     } else if (windowWidth <= 780) {
-        // Tablet Portrait
+        // tablet
         zoomLevel = 1.5
     } else if (windowWidth <= 1025) {
-        // Tablet Landscape
+        // desktop
         zoomLevel = 2
     } else {
-        // Desktop and beyond
+        // desktop large
         zoomLevel = 2
     }
 
-    // Check if DOM element with ID exist
+    // check if DOM element with ID exist
     if (mapDiv) {
         var map = new google.maps.Map(mapDiv, {
             zoom: zoomLevel,
@@ -275,7 +272,7 @@ function initMap() {
             styles: mapStyles
         });
 
-        // Loop to create markers and info window
+        // loop to create markers and info window
         for (i = 0; i < locationsJSON.length; i++) {
             marker = new google.maps.Marker({
                 map: map,
@@ -296,7 +293,7 @@ function initMap() {
                         locationsJSON[i].details.link
                     );
 
-                    // Dont send info window if no content exist.
+                    // don't send info window if no content exist.
                     // I'm only checking if the heading exist here
                     if (locationsJSON[i].details.heading !== "") {
                         infoWindow.setContent(windowContent);
@@ -307,9 +304,10 @@ function initMap() {
             markers.push(marker);
         };
 
-        // Set default info window by array index
+        // set default info window by array index
         var defaultWindowIndex = 3;
-        // Check if default index is set
+
+        // check if default index is set
         if (defaultWindowIndex && defaultWindowIndex <= locationsJSON.length) {
             var windowContent = popupHTML(locationsJSON[defaultWindowIndex].details.heading,
                 locationsJSON[defaultWindowIndex].details.description,
@@ -319,7 +317,6 @@ function initMap() {
             infoWindow.setContent(windowContent);
             infoWindow.open(map, markers[defaultWindowIndex]);
         }
-
     }
 
 };
